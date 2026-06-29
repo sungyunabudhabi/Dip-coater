@@ -7,7 +7,7 @@ const int32_t RUN_VELOCITY = 2237;        //about 30RPM
 const float MICROSTEPS_PER_SEC = 1600;    //RUN_VELOCITY*12,000,000 / 2^24
 const float ROTATIONS = 1.5;              //VOLUME = 0.2808 * ROTATIONS (ml)
 
-const int EN_PIN = ;
+const int EN_PIN = ;      //add pin number
 
 unsigned long startTime = 0;
 long requiredTime = (200 * MICROSTEPS / MICROSTEPS_PER_SEC) * ROTATIONS * 1000;
@@ -17,7 +17,7 @@ void dispense() {
   nema.enable();
   delay(1000);
   startTime = millis();
-  nema.disableInverseMotorDirection();
+  nema.enableInverseMotorDirection();
   nema.moveAtVelocity(RUN_VELOCITY);
   while (millis() - startTime <= requiredTime) {
     }
@@ -25,7 +25,7 @@ void dispense() {
   delay(1000);
 
   startTime = millis();
-  nema.enableInverseMotorDirection();
+  nema.disableInverseMotorDirection();
   nema.moveAtVelocity(RUN_VELOCITY);
   while (millis() - startTime <= requiredTime){
   }

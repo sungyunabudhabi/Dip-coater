@@ -14,29 +14,31 @@ long requiredTime = (200 * MICROSTEPS / MICROSTEPS_PER_SEC) * ROTATIONS * 1000;
 bool isMoving = false;
 
 void dispense() {
+  digitalWrite(EN_PIN, LOW);
   nema.enable();
   delay(1000);
-  startTime = millis();
   nema.enableInverseMotorDirection();
   nema.moveAtVelocity(RUN_VELOCITY);
+  startTime = millis();
   while (millis() - startTime <= requiredTime) {
     }
   nema.moveAtVelocity(0);
   delay(1000);
 
-  startTime = millis();
   nema.disableInverseMotorDirection();
   nema.moveAtVelocity(RUN_VELOCITY);
+  startTime = millis();
   while (millis() - startTime <= requiredTime){
   }
   nema.moveAtVelocity(0);
   nema.disable();
+  digitalWrite(EN_PIN, HIGH);
 }
 
 void setup() {
   // put your setup code here, to run once:
   pinMode(EN_PIN, OUTPUT);
-  digitalWrite(EN_PIN, LOW);
+  digitalWrite(EN_PIN, HIGH);
   // Start the hardware serial port at the driver's default speed
   Serial3.begin(115200); 
   
